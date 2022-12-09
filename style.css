@@ -31,6 +31,10 @@ h2 {
   font-weight: bold;
   font-size: 10px;
 }
+.question span.difficulty {
+  margin-left: 10px;
+  color: lightslategray;
+}
 
 #buttonbar {
   margin-bottom: 30px;

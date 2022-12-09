@@ -148,8 +148,11 @@ function renderQuestion() {
     category.innerText = "Category: " + question.category;
     qn.appendChild(category);
     let difficulty = document.createElement("span");
+    difficulty.classList.add("difficulty");
     difficulty.innerText = "Difficulty: " + question.difficulty;
     qn.appendChild(difficulty);
+    let hr = document.createElement("hr");
+    qn.appendChild(hr);
     
     // Do different things depending on question type
     if (question.type === "multiple") {
