@@ -212,6 +212,22 @@ function nextQuestion() {
     }
 }
 
+function newQuiz() {
+    let quizname = document.querySelector("select").value;
+    switch(quizname) {
+        case "science":
+            questions = sciencequiz;
+            break;
+        case "doom":
+            questions = doomquiz;
+            break;
+        default: // Idk, this won't really happen here but wanted to have something at least
+            questions = sciencequiz;
+    }
+    renderButtons(); // This is a problem if you somehow manage to make an invalid choice
+    renderQuestion();
+}
+
 /* 
 
  ----- RENDER FUNCTIONS ----- 
@@ -242,21 +258,6 @@ function renderSetup() {
     container.appendChild(stp);
 }
 
-function newQuiz() {
-    let quizname = document.querySelector("select").value;
-    switch(quizname) {
-        case "science":
-            questions = sciencequiz;
-            break;
-        case "doom":
-            questions = doomquiz;
-            break;
-        default: // Idk, this won't really happen here but wanted to have something at least
-            questions = sciencequiz;
-    }
-    renderButtons(); // This is a problem if you somehow manage to make an invalid choice
-    renderQuestion();
-}
 
 function renderButtons() {
     let buttonbar = document.getElementById("buttonbar");
