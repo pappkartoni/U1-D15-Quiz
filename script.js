@@ -210,6 +210,53 @@ function nextQuestion() {
  ----- RENDER FUNCTIONS ----- 
  
  */
+
+function renderSetup() {
+    container.innerHTML = "";
+    let bbar = document.getElementById("buttonbar");
+    bbar.innerHTML = "";
+    let stp = document.createElement("div");
+    stp.classList.add("setup");
+    
+    let h2 = document.createElement("h2");
+    h2.innerText = "What do you want play?";
+    stp.appendChild(h2);
+    let hr = document.createElement("hr");
+    stp.appendChild(hr);
+    
+    let select = document.createElement("div");
+    select.innerHTML = `<label for="quizzes">Select a quiz:</label>
+    <select id="quizzes" name="quizzes">
+    <option value="science">Science Quiz</option>
+    <option value="doom">MF DOOM</option>
+    </select>
+    <input type="button" value="Let's go!" onclick="newQuiz()">`;
+    stp.appendChild(select);
+    container.appendChild(stp);
+}
+
+function newQuiz() {
+    let quizname = document.querySelector("select").value;
+    switch(quizname) {
+        case "science":
+            questions = sciencequiz;
+            break;
+        case "doom":
+            questions = doomquiz;
+            break;
+        default: // Idk, this won't really happen here but wanted to have something at least
+            questions = sciencequiz;
+    }
+    renderButtons(); // This is a problem if you somehow manage to make an invalid choice
+    renderQuestion();
+}
+
+function renderButtons() {
+    let buttonbar = document.getElementById("buttonbar");
+    buttonbar.innerHTML = `<input type="button" value="Restart!" onclick="restart()" />
+                           <input type="button" value="Next Question!" onclick="nextQuestion()" />`;
+}
+
 function renderQuestion() {
     container.innerHTML = "";
     let question =  questions[questionNumber];
@@ -329,52 +376,6 @@ function shuffleArray(arr) { // i reused this from yesterday
     return arr;
 }
 
-
-function newQuiz() {
-    let quizname = document.querySelector("select").value;
-    switch(quizname) {
-        case "science":
-            questions = sciencequiz;
-            break;
-        case "doom":
-            questions = doomquiz;
-            break;
-        default: // Idk, this won't really happen here but wanted to have something at least
-            questions = sciencequiz;
-    }
-    renderButtons(); // This is a problem if you somehow manage to make an invalid choice
-    renderQuestion();
-}
-
-function renderButtons() {
-    let buttonbar = document.getElementById("buttonbar");
-    buttonbar.innerHTML = `<input type="button" value="Restart!" onclick="restart()" />
-                           <input type="button" value="Next Question!" onclick="nextQuestion()" />`;
-}
-
-function renderSetup() {
-    container.innerHTML = "";
-    let bbar = document.getElementById("buttonbar");
-    bbar.innerHTML = "";
-    let stp = document.createElement("div");
-    stp.classList.add("setup");
-    
-    let h2 = document.createElement("h2");
-    h2.innerText = "What do you want play?";
-    stp.appendChild(h2);
-    let hr = document.createElement("hr");
-    stp.appendChild(hr);
-
-    let select = document.createElement("div");
-    select.innerHTML = `<label for="quizzes">Select a quiz:</label>
-                        <select id="quizzes" name="quizzes">
-                        <option value="science">Science Quiz</option>
-                        <option value="doom">MF DOOM</option>
-                        </select>
-                        <input type="button" value="Let's go!" onclick="newQuiz()">`;
-    stp.appendChild(select);
-    container.appendChild(stp);
-}
 /* 
 
  ----- ON LOAD ----- 
