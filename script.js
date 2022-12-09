@@ -1,3 +1,8 @@
+/* 
+
+ ----- THE POSSIBLE QUIZZES ----- 
+
+ */
 const sciencequiz = [
     {
       category: "Science: Computers",
@@ -171,7 +176,9 @@ const doomquiz = [
         correct_answer: "Gladiator",
         incorrect_answers: ["300", "Troy", "Spartacus"],
       },
-];/* 
+];
+
+/* 
 
  ----- GLOBAL VARIABLES ----- 
 
