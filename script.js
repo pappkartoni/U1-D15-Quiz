@@ -16,7 +16,7 @@ const questions = [
       type: "multiple",
       difficulty: "easy",
       question:
-        "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?",
+        "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn't get modified?",
       correct_answer: "Final",
       incorrect_answers: ["Static", "Private", "Public"],
     },
@@ -98,13 +98,13 @@ const questions = [
     },
 ];
 
-let points = 0;
 let questionNumber = 0;
-let qf = document.getElementById("questionField");
+let points = 0;
+let container = document.getElementById("container");
 
 
-function createQuestion() {
-    questionNumber++;
+function renderQuestion() {
+    container.innerHTML = "";
     let question =  questions[questionNumber];
     let qn = document.createElement("div");
     qn.classList.add("question");
@@ -113,10 +113,10 @@ function createQuestion() {
     h2.innerText = question.question;
     qn.appendChild(h2);
     let category = document.createElement("span");
-    category.innerText = question.category;
+    category.innerText = "Category: " + question.category;
     qn.appendChild(category);
     let difficulty = document.createElement("span");
-    difficulty.innerText = question.difficulty;
+    difficulty.innerText = "Difficulty: " + question.difficulty;
     qn.appendChild(difficulty);
 
     let answers = [question.correct_answer].concat(question.incorrect_answers); //shuffle here / differentiate between question types
@@ -125,7 +125,7 @@ function createQuestion() {
         qn.appendChild(radio);
     }
 
-    return qn;
+    container.appendChild(qn);
 }
 
 function generateRadioButton(text, num) {
@@ -136,10 +136,19 @@ function generateRadioButton(text, num) {
 }
 
 function checkAnswer() {
-// check the stuff
+    let checked = document.querySelector("input[type='radio']:checked");
+    if (checked) {
+        let answer = checked.value;
+        if (answer === questions[questionNumber].correct_answer) {
+            checked.parentElement.classList.add("correct");
+            points++;
+        } else {
+            checked.parentElement.classList.add("wrong");
+        }
+    }
 }
 
-function chooseAnswer() {
+function chooseAnswer() { //is this needed?
 
 }
 
@@ -147,17 +156,40 @@ function shuffleAnswers() { //ignore for now
 
 }
 
-function restart() { //ignore for now
-
+function restart() {
+    questionNumber = 0;
+    points = 0;
+    renderQuestion();
 }
 
 function nextQuestion() { //will do same thing as renderQuestion maybe?
     checkAnswer();
-    qf.innerHTML = "";
-    qf.appendChild(createQuestion());
+    questionNumber++;
+    if (questionNumber < questions.length) {
+        renderQuestion();
+    } else {
+        renderResult();
+    }
+}
+
+function renderResult() {
+    container.innerHTML = "";
+    let res = document.createElement("div");
+    res.classList.add("question");
+
+    let h2 = document.createElement("h2");
+    h2.innerText = "Thank you for playing!";
+    res.appendChild(h2);
+
+    let evaluation = document.createElement("div")
+    evaluation.innerHTML = `<p>You did great! You scored ${points} out of a total of ${questions.length} points!</p>`
+    res.appendChild(evaluation);
+
+    container.appendChild(res);
 }
 
 window.onload = function () {
+    renderQuestion();
     // HINTS
     // IF YOU ARE DISPLAYING ALL THE QUESTIONS AT ONCE:
     // For each question, create a container for wrapping it; then create a radio button
