@@ -234,16 +234,6 @@ function checkAnswer(event) { // TODO rethink this whole thing
         }
     }
 }
-/* 
-function checkListener(event) {
-    if (event.target.value === questions[questionNumber].correct_answer) {
-        event.target.parentElement.classList.add("correct");
-        points++;
-    } else {
-        event.target.parentElement.classList.add("wrong");
-    }
-}
- */
 
 /* 
 
@@ -261,6 +251,11 @@ function shuffleArray(arr) { // i reused this from yesterday
     return arr;
 }
 
+/* 
+
+ ----- ON LOAD ----- 
+ 
+ */
 window.onload = function () {
-    renderQuestion();
+    renderQuestion(); //TODO let player have choice of quiz, i.e. implement renderSetup() somehow
 };
