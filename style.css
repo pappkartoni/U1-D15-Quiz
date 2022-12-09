@@ -24,7 +24,7 @@ h2 {
   background-color: bisque;
   max-width: 50%;
   margin-inline: auto;
-  padding: 10px;
+  padding: 20px;
   text-align: left;
 }
 .question span, .setup span {
@@ -34,6 +34,37 @@ h2 {
 .question span.difficulty, .setup span.difficulty {
   margin-left: 10px;
   color: lightslategray;
+}
+
+.setup {
+  margin-top: 97px;
+}
+.setup label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+.setup select {
+  border-radius: 5px;
+  padding: 5px;
+  background-color: azure;
+  color: darkslategray;
+}
+.setup div {
+  height: 2rem;
+  line-height: 2rem;
+}
+.setup div input[type=button] {
+  float: right;
+  color: azure;
+  border: 1px solid darkgray;
+  background-color: darkslategray;
+  padding: 0.5rem;
+}
+.setup div input[type=button]:hover {
+  background-color: lightslategray;
+}
+.setup div input[type=button]:active {
+  background-color: antiquewhite;
 }
 
 #buttonbar {
