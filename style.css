@@ -20,18 +20,18 @@ h2 {
   margin-inline: auto;
 }
 
-.question {
+.question, .setup {
   background-color: bisque;
   max-width: 50%;
   margin-inline: auto;
   padding: 10px;
   text-align: left;
 }
-.question span {
+.question span, .setup span {
   font-weight: bold;
   font-size: 10px;
 }
-.question span.difficulty {
+.question span.difficulty, .setup span.difficulty {
   margin-left: 10px;
   color: lightslategray;
 }
