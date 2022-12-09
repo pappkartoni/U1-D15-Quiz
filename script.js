@@ -119,13 +119,31 @@ function renderQuestion() {
     difficulty.innerText = "Difficulty: " + question.difficulty;
     qn.appendChild(difficulty);
 
-    let answers = [question.correct_answer].concat(question.incorrect_answers); //shuffle here / differentiate between question types
-    for (let i = 0; i<answers.length;i++) {
-        let radio = generateRadioButton(answers[i], i);
-        qn.appendChild(radio);
+    // Do different things depending on question type
+    if (question.type === "multiple") {
+        let answers = shuffleArray([question.correct_answer].concat(question.incorrect_answers)); // TODO: find better way to do this
+        renderMultipleQuestion(qn, answers);
+    } else if (question.type === "boolean") {
+        renderBoolQuestion(qn);
     }
 
     container.appendChild(qn);
+    let radios = document.querySelectorAll("input[type='radio'");
+    for (r of radios) {
+        r.addEventListener("change", checkAnswer)
+    }
+}
+
+function renderMultipleQuestion(qn, answers) {
+    for (let i = 0; i < answers.length; i++) {
+        let radio = generateRadioButton(answers[i], i);
+        qn.appendChild(radio);
+    }
+}
+
+function renderBoolQuestion(qn) {
+    qn.appendChild(generateRadioButton("True", 0));
+    qn.appendChild(generateRadioButton("False", 1));
 }
 
 function generateRadioButton(text, num) {
@@ -134,26 +152,46 @@ function generateRadioButton(text, num) {
                      <label for="${num}">${text}</label>`;
     return radio;
 }
+/* 
+function checkListener(event) {
+    if (event.target.value === questions[questionNumber].correct_answer) {
+        event.target.parentElement.classList.add("correct");
+        points++;
+    } else {
+        event.target.parentElement.classList.add("wrong");
+    }
+}
+ */
+function checkAnswer(event) {
+    let radios = document.querySelectorAll("input[type='radio']:not(:checked)");
+    let choice = event.target
+    let answer = choice.value;
+    let corrAnswer = questions[questionNumber].correct_answer;
+    event.target.disabled = true;
+    if (answer === corrAnswer) {
+        choice.parentElement.classList.add("correct");
+        points++;
+    } else {
+        choice.parentElement.classList.add("wrong");
+    }
 
-function checkAnswer() {
-    let checked = document.querySelector("input[type='radio']:checked");
-    if (checked) {
-        let answer = checked.value;
-        if (answer === questions[questionNumber].correct_answer) {
-            checked.parentElement.classList.add("correct");
-            points++;
-        } else {
-            checked.parentElement.classList.add("wrong");
+    for (let r of radios) { // TODO rethink this whole thing
+        r.disabled = true;
+        if (r.value === corrAnswer) {
+            r.parentElement.classList.add("hint");
         }
     }
 }
 
-function chooseAnswer() { //is this needed?
+function shuffleArray(arr) { // i reused this from yesterday
+    for (let i=0;i<arr.length-1; i++) {
+        let j = Math.floor(Math.random() * (arr.length - i)) + i;
+        let swp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = swp;
+    }
 
-}
-
-function shuffleAnswers() { //ignore for now
-
+    return arr;
 }
 
 function restart() {
@@ -162,13 +200,15 @@ function restart() {
     renderQuestion();
 }
 
-function nextQuestion() { //will do same thing as renderQuestion maybe?
-    checkAnswer();
-    questionNumber++;
-    if (questionNumber < questions.length) {
-        renderQuestion();
-    } else {
-        renderResult();
+function nextQuestion() { 
+    let checked = document.querySelector("input[type='radio']:checked");
+    if (checked) {
+        questionNumber++;
+        if (questionNumber < questions.length) {
+            renderQuestion();
+        } else {
+            renderResult();
+        }
     }
 }
 

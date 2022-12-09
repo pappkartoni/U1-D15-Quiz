@@ -50,4 +50,16 @@ input[type=button]:hover {
 }
 input[type=button]:active {
   background-color: coral;
+}
+
+.correct {
+  background-color: lightgreen;
+}
+
+.wrong {
+  background-color: crimson;
+}
+
+.hint {
+  background-color: yellowgreen;
 }/*# sourceMappingURL=style.css.map */
