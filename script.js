@@ -100,10 +100,39 @@ const questions = [
 
 let points = 0;
 let questionNumber = 0;
+let qf = document.getElementById("questionField");
 
 
-function renderQuestion() {
-// do the stuff
+function createQuestion() {
+    questionNumber++;
+    let question =  questions[questionNumber];
+    let qn = document.createElement("div");
+    qn.classList.add("question");
+    
+    let h2 = document.createElement("h2");
+    h2.innerText = question.question;
+    qn.appendChild(h2);
+    let category = document.createElement("span");
+    category.innerText = question.category;
+    qn.appendChild(category);
+    let difficulty = document.createElement("span");
+    difficulty.innerText = question.difficulty;
+    qn.appendChild(difficulty);
+
+    let answers = [question.correct_answer].concat(question.incorrect_answers); //shuffle here / differentiate between question types
+    for (let i = 0; i<answers.length;i++) {
+        let radio = generateRadioButton(answers[i], i);
+        qn.appendChild(radio);
+    }
+
+    return qn;
+}
+
+function generateRadioButton(text, num) {
+    let radio = document.createElement("div");
+    radio.innerHTML = `<input type="radio" id="${num}" value="${text}" name="q${questionNumber}">
+                     <label for="${num}">${text}</label>`;
+    return radio;
 }
 
 function checkAnswer() {
@@ -114,17 +143,18 @@ function chooseAnswer() {
 
 }
 
-function shuffleAnswers() {
+function shuffleAnswers() { //ignore for now
 
 }
 
-function restart() {
+function restart() { //ignore for now
 
 }
 
 function nextQuestion() { //will do same thing as renderQuestion maybe?
     checkAnswer();
-    renderQuestion();
+    qf.innerHTML = "";
+    qf.appendChild(createQuestion());
 }
 
 window.onload = function () {
