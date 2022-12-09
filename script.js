@@ -233,7 +233,6 @@ function newQuiz() {
  ----- RENDER FUNCTIONS ----- 
  
  */
-
 function renderSetup() {
     container.innerHTML = "";
     let bbar = document.getElementById("buttonbar");
